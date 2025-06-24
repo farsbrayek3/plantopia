@@ -35,7 +35,6 @@ public class PlantService {
         repository.deleteById(id);
     }
 
-    // 🚀 Communication with NestJS microservice
     public List<Map<String, Object>> fetchSensorData() {
         String url = "http://plant-monitoring-service/api/sensors";
         try {

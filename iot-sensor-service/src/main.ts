@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -6,6 +7,9 @@ import { Eureka, EurekaClient } from 'eureka-js-client'; // Ensure type import
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // ✅ Enable CORS before anything else that depends on request handling
+  app.enableCors({ origin: '*' });
 
   const config = new DocumentBuilder()
     .setTitle('Plantopia API')
@@ -18,11 +22,10 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  await app.listen(3000);
-  console.log(`✅ App running at http://localhost:3000`);
+  await app.listen(3001);
+  console.log(`✅ App running at http://localhost:3001`);
 
-  // Eureka Client Config (cast to EurekaClient for type safety)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const eurekaClient = new Eureka({
     instance: {
       app: 'plant-monitoring-service',
@@ -30,7 +33,7 @@ async function bootstrap() {
       hostName: 'localhost',
       ipAddr: '127.0.0.1',
       port: {
-        $: 3000,
+        $: 3001,
         '@enabled': true,
       },
       vipAddress: 'plant-monitoring-service',
@@ -46,7 +49,7 @@ async function bootstrap() {
     },
   }) as unknown as EurekaClient;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   eurekaClient.start((err) => {
     if (err) {
       console.error('❌ Eureka registration failed:', err);

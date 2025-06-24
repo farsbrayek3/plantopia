@@ -18,9 +18,9 @@ public class Plant {
 
     private String type;
 
-    private double humidityLevel; // taux d’humidité actuel
+    private double humidityLevel;
 
-    private boolean needsWater; // alerte à arroser
+    private boolean needsWater;
 
-    private String lightRequirement; // Ex: "Full Sun", "Partial Shade"
+    private String lightRequirement;
 }
