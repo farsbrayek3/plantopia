@@ -1,0 +1,64 @@
+services:
+  discovery-server:
+    build:
+      context: ./discovery-server
+    ports:
+      - "8761:8761"
+    container_name: discovery-server
+    networks:
+      - plantopia-net
+
+  gateway:
+    build:
+      context: ./gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-server
+    container_name: gateway
+    networks:
+      - plantopia-net
+
+  plant-care-service:
+    build:
+      context: ./plant-care-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - discovery-server
+    container_name: plant-care-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - plantopia-net
+
+  iot-sensor-service:
+    build:
+      context: ./iot-sensor-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - discovery-server
+    container_name: iot-sensor-service
+    environment:
+      - MONGODB_URI=mongodb+srv://fares:xWH0tu8r7FO8WSrR@cluster0.rbaxixd.mongodb.net/plantopia?retryWrites=true&w=majority&appName=Cluster0
+    networks:
+      - plantopia-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.3
+    container_name: keycloak
+    command: start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=dev-mem
+      - KC_HTTP_PORT=8180
+    ports:
+      - "8180:8180"
+    networks:
+      - plantopia-net
+
+networks:
+  plantopia-net:
+    driver: bridge

@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: plant-care
+          uri: http://localhost:8080
+          predicates:
+            - Path=/plants/**     # everything under /plants
+            - Path=/plants        # and the bare /plants endpoint
+          filters:
+            # strip off the leading /plants (or /plants/) and
+            # prefix with /api/plants so it matches your controllers
+            - RewritePath=/plants/(?<remaining>.*), /api/plants/$\{remaining}
+            - RewritePath=/plants, /api/plants
+
+        - id: sensor-service
+          uri: http://localhost:3000
+          predicates:
+            - Path=/sensor/**
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+    # Eureka bits as before…
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
