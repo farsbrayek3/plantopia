@@ -38,7 +38,7 @@ applicationweb/
 ### 1. Clone & Build
 
 ```bash
-git clone https://github.com/your-user/plantopia.git
+git clone https://github.com/farsbrayek3/plantopia.git
 cd plantopia
 
 # Build containers
@@ -96,46 +96,8 @@ docker-compose up
 
 ## 👨‍💼 Maintainer
 
-- Moetaz Brayek ([LinkedIn](https://www.linkedin.com/in/moetaz-brayek))
+by me
 
 ## 🌐 License
 
 This project is under MIT License.
-
----
-
-## .gitignore
-
-```
-# Maven
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!.mvn/wrapper/maven-wrapper.properties
-
-# Node.js / NestJS
-node_modules/
-dist/
-
-# IDEs
-.idea/
-.vscode/
-*.iml
-
-# Logs and env
-*.log
-.env
-
-# OS junk
-.DS_Store
-Thumbs.db
-
-# Docker
-**/.dockerignore
-**/Dockerfile
-
-# Git
-.git/
-.gitignore
-```
-
----
