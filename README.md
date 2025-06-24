@@ -96,46 +96,4 @@ docker-compose up
 
 ## 👨‍💼 Maintainer
 
-- Moetaz Brayek ([LinkedIn](https://www.linkedin.com/in/moetaz-brayek))
-
-## 🌐 License
-
-This project is under MIT License.
-
----
-
-## .gitignore
-
-```
-# Maven
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!.mvn/wrapper/maven-wrapper.properties
-
-# Node.js / NestJS
-node_modules/
-dist/
-
-# IDEs
-.idea/
-.vscode/
-*.iml
-
-# Logs and env
-*.log
-.env
-
-# OS junk
-.DS_Store
-Thumbs.db
-
-# Docker
-**/.dockerignore
-**/Dockerfile
-
-# Git
-.git/
-.gitignore
-```
-
----
+By Me
